@@ -1,6 +1,9 @@
-# Africa & The World
+# Africa-to-the-world
 
 ## Running the AI trip assistant locally
+
+Africa & The World is a site for exploring African history, culture, and
+literature.
 
 The chat sends messages to the Vercel serverless function at `/api/trip-chat`,
 which calls Google's Gemini API. The Gemini API key stays on the server and is
