@@ -420,13 +420,27 @@
 
             </form>
 
-            <aside class="trip-assistant-card" aria-labelledby="tripAssistantHeading">
+            </div>
+
+            <aside
+                id="tripAssistantPanel"
+                class="trip-assistant-card"
+                aria-labelledby="tripAssistantHeading"
+            >
                 <div class="trip-assistant-heading">
                     <i class="fas fa-robot" aria-hidden="true"></i>
                     <div>
                         <span class="trip-assistant-label">TRIP PLANNING ASSISTANT</span>
                         <h3 id="tripAssistantHeading">AI Travel Chat</h3>
                     </div>
+                    <button
+                        id="tripAssistantClose"
+                        class="trip-assistant-close"
+                        type="button"
+                        aria-label="Close AI travel chat"
+                    >
+                        <i class="fas fa-xmark" aria-hidden="true"></i>
+                    </button>
                 </div>
 
                 <div
@@ -468,7 +482,19 @@
                     current requirements with official government sources.
                 </p>
             </aside>
-            </div>
+
+            <button
+                id="tripAssistantLauncher"
+                class="trip-assistant-launcher"
+                type="button"
+                aria-controls="tripAssistantPanel"
+                aria-expanded="true"
+                aria-label="Open AI travel chat"
+                hidden
+            >
+                <i class="fas fa-comments" aria-hidden="true"></i>
+                <span>Ask AI</span>
+            </button>
 
             <div
                 id="tripPlannerResult"

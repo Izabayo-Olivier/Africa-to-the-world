@@ -125,7 +125,7 @@ module.exports = async function handler(req, res) {
     if (!process.env.GEMINI_API_KEY) {
         console.error("GEMINI_API_KEY is not configured.");
         return sendJson(res, 503, {
-            error: "The travel assistant is not configured yet. Please try again later."
+            error: "The travel assistant is not configured. Run npm run configure:ai with a Gemini API key, then restart npm start."
         });
     }
 

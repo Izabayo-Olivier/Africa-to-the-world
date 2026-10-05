@@ -370,6 +370,51 @@ const tripAssistantInput =
 const tripAssistantMessages =
     document.getElementById("tripAssistantMessages");
 
+const tripAssistantPanel =
+    document.getElementById("tripAssistantPanel");
+
+const tripAssistantLauncher =
+    document.getElementById("tripAssistantLauncher");
+
+const tripAssistantClose =
+    document.getElementById("tripAssistantClose");
+
+if (
+    tripAssistantPanel &&
+    tripAssistantLauncher &&
+    tripAssistantClose &&
+    tripAssistantInput
+) {
+    const setTripAssistantOpen = (isOpen) => {
+        tripAssistantPanel.hidden = !isOpen;
+        tripAssistantLauncher.hidden = isOpen;
+        tripAssistantLauncher.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
+
+        if (isOpen) {
+            tripAssistantInput.focus();
+        } else {
+            tripAssistantLauncher.focus();
+        }
+    };
+
+    tripAssistantClose.addEventListener("click", () => {
+        setTripAssistantOpen(false);
+    });
+
+    tripAssistantLauncher.addEventListener("click", () => {
+        setTripAssistantOpen(true);
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !tripAssistantPanel.hidden) {
+            setTripAssistantOpen(false);
+        }
+    });
+}
+
 if (
     tripAssistantForm &&
     tripAssistantInput &&
@@ -461,7 +506,10 @@ if (
             if (!response.ok) {
                 if (response.status === 404 || response.status === 405) {
                     throw new Error(
-                        "The Gemini chat API isn't running here yet. Deploy this site to Vercel and add your GEMINI_API_KEY environment variable."
+                        window.location.hostname === "localhost" ||
+                        window.location.hostname === "127.0.0.1"
+                            ? "This static preview can't run the AI API. Start the site with `npx vercel dev` and configure GEMINI_API_KEY; see README.md for setup."
+                            : "The Gemini chat API isn't available. Deploy this site to Vercel and add your GEMINI_API_KEY environment variable."
                     );
                 }
 
@@ -498,7 +546,11 @@ if (
             userMessage.classList.add("message-not-sent");
             console.error("Trip assistant request failed.", error);
             appendChatMessage(
-                error instanceof Error
+                error instanceof TypeError &&
+                (window.location.hostname === "localhost" ||
+                    window.location.hostname === "127.0.0.1")
+                    ? "The local preview can't reach the AI API. Start the site with `npx vercel dev` and configure GEMINI_API_KEY; see README.md for setup."
+                    : error instanceof Error
                     ? error.message
                     : "The travel assistant couldn't respond. Please try again.",
                 "error-message"
